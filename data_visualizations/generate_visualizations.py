@@ -2,14 +2,29 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def generate_graph_of_highest_scores_by_sports():
-    academic_scores_for_sports = pd.read_csv('data_sets/Cumalitive_Academic_Score.csv',index_col='Unnamed: 0')
-    graph = academic_scores_for_sports.sort(columns='2014_CUMULATIVE_SCORE', ascending=True).plot(kind='bar',
-                                                                                            width=0.8, figsize=(15, 20))
-    graph.set_title("Sports With the Highest Academic Scores")
-    graph.set_xlabel("Sports")
-    graph.set_ylabel("Cumulative Academic Scores")
-    plt.savefig("data_visualizations/Highest_Academic_Scores_By_Sport.pdf")
+def generate_graph(file_name, column_name, x_label, y_label, title, figure_name, index_col='Unnamed: 0'):
+    academic_scores_for_sports = pd.read_csv(file_name,index_col='Unnamed: 0')
+    graph = academic_scores_for_sports.sort(columns=column_name, ascending=True).plot(kind='bar',
+                                                                                      width=0.8, figsize=(15, 20))
+    graph.set_title(title)
+    graph.set_xlabel(x_label)
+    graph.set_ylabel(y_label)
+    plt.savefig(figure_name)
+
+
 
 if __name__ == '__main__':
-    generate_graph_of_highest_scores_by_sports()
+    generate_graph('data_sets/Cumulative_Academic_Score_By_Sport.csv',
+                   '2014_CUMULATIVE_SCORE',
+                   "Sports",
+                   "Cumulative Academic Scores",
+                   "Sports With the Highest Academic Scores",
+                   "data_visualizations/Cumulative_Academic_Scores_By_Sport.pdf"
+                  )
+    generate_graph('data_sets/Average_Academic_Score_By_Sport.csv',
+                   '2014_AVERAGE_SCORE',
+                   'Sports',
+                   'Cumulative Academic Scores',
+                   'Average Academic Score For Sport',
+                   'data_visualizations/Average_Academic_Score_By_Sport.pdf'
+                   )
