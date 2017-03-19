@@ -5,10 +5,16 @@ import matplotlib.pyplot as plt
 def generate_graph(file_name, column_name, x_label, y_label, title, figure_name, index_col='Unnamed: 0'):
     academic_scores_for_sports = pd.read_csv(file_name,index_col='Unnamed: 0')
     graph = academic_scores_for_sports.sort(columns=column_name, ascending=True).plot(kind='bar',
-                                                                                      width=0.8, figsize=(15, 20))
+                                                                                      width=0.8, figsize=(15, 20),
+                                                                                      linewidth=5)
     graph.set_title(title)
     graph.set_xlabel(x_label)
     graph.set_ylabel(y_label)
+    # Shrink current axis by 20%
+    box = graph.get_position()
+    graph.set_position([box.x0, box.y0, box.width * 0.8, box.height])
+    # Put a legend to the right of the current axis
+    graph.legend(loc='center left', bbox_to_anchor=(1, 0.5))
     plt.savefig(figure_name)
 
 
