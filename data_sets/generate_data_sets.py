@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 data_set = pd.read_csv('data_sets/scores_by_schools_and_teams.csv')
 
-def create_data_set_of_cumulative_scores():
+def create_data_set_of_cumulative_sport_scores():
     sports_index = data_set['SPORT_NAME'].unique()
     scores_column = ['2004_CUMULATIVE_SCORE', '2005_CUMULATIVE_SCORE', '2006_CUMULATIVE_SCORE', '2007_CUMULATIVE_SCORE',
                      '2008_CUMULATIVE_SCORE', '2009_CUMULATIVE_SCORE', '2010_CUMULATIVE_SCORE', '2011_CUMULATIVE_SCORE',
@@ -19,7 +19,7 @@ def create_data_set_of_cumulative_scores():
             acdemic_scores_by_sport.loc[index][cumalitive_score] += row
     acdemic_scores_by_sport.to_csv('data_sets/Cumulative_Academic_Score_By_Sport.csv')
 
-def create_data_set_of_average_scores():
+def create_data_set_of_average_sport_scores():
     amount_of_sport_teams = dict(data_set['SPORT_NAME'].value_counts())
     average_scores_column = ['2004_AVERAGE_SCORE', '2005_AVERAGE_SCORE', '2006_AVERAGE_SCORE', '2007_AVERAGE_SCORE',
                      '2008_AVERAGE_SCORE', '2009_AVERAGE_SCORE', '2010_AVERAGE_SCORE', '2011_AVERAGE_SCORE',
@@ -35,7 +35,23 @@ def create_data_set_of_average_scores():
                     /= amount_of_sport_teams[sports]
     average_academic_scores_data_set.to_csv('data_sets/Average_Academic_Score_By_Sport.csv')
 
+def create_data_set_of_average_school_scores():
+    orginal_data_set = data_set
+    del orginal_data_set['SCHOOL_ID']
+    orginal_data_set = orginal_data_set.set_index('SCHOOL_NAME')
+    list_of_school_names = orginal_data_set.index.unique().tolist()
+    average_score_for_schools = pd.DataFrame(index=list_of_school_names)
+    print(orginal_data_set.loc['Canisius College'][str(2004 + 0) + '_SCORE'].count())
+    for school in list_of_school_names:
+        for i in range(11):
+            if orginal_data_set.loc[school][str(2004 + i) + '_SCORE'].count() > 1:
+                average_score = sum(orginal_data_set.loc[school][str(2004 + i) + '_SCORE'].tolist())
+            else:
+                average_score = orginal_data_set.loc[school][str(2004 + i) + '_SCORE'].value
+            average_score_for_schools.loc[school][str(2004 + i) + '_AVERAGE_SCORE'] = average_score
+    print(average_score_for_schools)
 
 if __name__ == '__main__':
-    #create_data_set_of_cumulative_scores()
-    create_data_set_of_average_scores()
+    #create_data_set_of_cumulative_sport_scores()
+    #create_data_set_of_average_sport_scores()
+    create_data_set_of_average_school_scores()
