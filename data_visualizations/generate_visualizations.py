@@ -5,11 +5,11 @@ import matplotlib.pyplot as plt
 def generate_graph(file_name, column_name, x_label, y_label, title, figure_name, index_col='Unnamed: 0'):
     academic_scores_for_sports = pd.read_csv(file_name,index_col='Unnamed: 0')
     graph = academic_scores_for_sports.sort(columns=column_name, ascending=True).plot(kind='bar',
-                                                                                      width=0.8, figsize=(15, 20),
+                                                                                      width=0.79, figsize=(25, 20),
                                                                                       linewidth=5)
     graph.set_title(title)
-    graph.set_xlabel(x_label)
-    graph.set_ylabel(y_label)
+    graph.set_xlabel(x_label, fontsize=18)
+    graph.set_ylabel(y_label, fontsize=18)
     # Shrink current axis by 20%
     box = graph.get_position()
     graph.set_position([box.x0, box.y0, box.width * 0.8, box.height])
@@ -28,7 +28,7 @@ if __name__ == '__main__':
                    "data_visualizations/Cumulative_Academic_Scores_By_Sport.pdf"
                   )
     generate_graph('data_sets/Average_Academic_Score_By_Sport.csv',
-                   '2014_AVERAGE_SCORE',
+                   '2004_AVERAGE_SCORE',
                    'Sports',
                    'Cumulative Academic Scores',
                    'Average Academic Score For Sport',
