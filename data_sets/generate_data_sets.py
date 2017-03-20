@@ -35,23 +35,25 @@ def create_data_set_of_average_sport_scores():
                     /= amount_of_sport_teams[sports]
     average_academic_scores_data_set.to_csv('data_sets/Average_Academic_Score_By_Sport.csv')
 
-def create_data_set_of_average_school_scores():
+def create_data_set_of_cumulative_school_scores():
     orginal_data_set = data_set
     del orginal_data_set['SCHOOL_ID']
     orginal_data_set = orginal_data_set.set_index('SCHOOL_NAME')
     list_of_school_names = orginal_data_set.index.unique().tolist()
-    average_score_for_schools = pd.DataFrame(index=list_of_school_names)
-    print(orginal_data_set.loc['Canisius College'][str(2004 + 0) + '_SCORE'].count())
+    list_of_columns = [str(2004 + i) + '_AVERAGE_SCORE' for i in range(11)]
+    cumulative_score_for_schools = pd.DataFrame(index=list_of_school_names, columns=list_of_columns)
     for school in list_of_school_names:
         for i in range(11):
-            if orginal_data_set.loc[school][str(2004 + i) + '_SCORE'].count() > 1:
-                average_score = sum(orginal_data_set.loc[school][str(2004 + i) + '_SCORE'].tolist())
+            average_score = orginal_data_set.loc[school][str(2004 + i) + '_SCORE'].tolist()
+            if type(average_score) == list:
+                average_score = sum(average_score)
+                cumulative_score_for_schools.loc[school][str(2004 + i) + '_AVERAGE_SCORE'] = average_score
             else:
-                average_score = orginal_data_set.loc[school][str(2004 + i) + '_SCORE'].value
-            average_score_for_schools.loc[school][str(2004 + i) + '_AVERAGE_SCORE'] = average_score
-    print(average_score_for_schools)
+                cumulative_score_for_schools.loc[school][str(2004 + i) + '_AVERAGE_SCORE'] = average_score
+    cumulative_score_for_schools.to_csv('data_sets/Cumulative_Academic_Score_By_School.csv')
+
 
 if __name__ == '__main__':
     #create_data_set_of_cumulative_sport_scores()
     #create_data_set_of_average_sport_scores()
-    create_data_set_of_average_school_scores()
+    create_data_set_of_cumulative_school_scores()
