@@ -16,25 +16,26 @@ def generate_graph(file_name, column_name, x_label, y_label, title, figure_name,
     # Put a legend to the right of the current axis
     graph.legend(loc='center left', bbox_to_anchor=(1, 0.5))
     plt.savefig(figure_name)
+    print(academic_scores_for_sports[rows].max())
 
 
 
 if __name__ == '__main__':
-    cumaltive_academic_scores_rows = [str(2004 + i) + '_CUMULATIVE_SCORE' for i in range(6, 11)]
+    cumulative_academic_scores_rows = [str(2004 + i) + '_CUMULATIVE_SCORE' for i in range(6, 11)]
     average_academic_scores_rows = [str(2004 + i) + '_AVERAGE_SCORE' for i in range(6, 11)]
     generate_graph('data_sets/Cumulative_Academic_Score_By_Sport.csv',
                    '2014_CUMULATIVE_SCORE',
                    "Sports",
                    "Cumulative Academic Scores",
                    "Sports With the Highest Academic Scores",
-                   "data_visualizations/Cumulative_Academic_Scores_By_Sport.pdf",
-                   cumaltive_academic_scores_rows
-                  )
+                   "data_visualizations/Cumulative_Academic_Scores_By_Sport.png",
+                   cumulative_academic_scores_rows
+                   )
     generate_graph('data_sets/Average_Academic_Score_By_Sport.csv',
                    '2004_AVERAGE_SCORE',
                    'Sports',
                    'Cumulative Academic Scores',
                    'Average Academic Score For Sport',
-                   'data_visualizations/Average_Academic_Score_By_Sport.pdf',
+                   'data_visualizations/Average_Academic_Score_By_Sport.png',
                     average_academic_scores_rows
                    )

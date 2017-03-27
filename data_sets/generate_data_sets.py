@@ -27,6 +27,10 @@ def create_data_set_of_average_sport_scores():
     cumulative_academic_scores_data_set = pd.read_csv('data_sets/Cumulative_Academic_Score_By_Sport.csv',
                                                       index_col='Unnamed: 0')
     average_academic_scores_data_set = pd.DataFrame(index=amount_of_sport_teams.keys(), columns=average_scores_column)
+    for i in range(11):
+        cumulative_score_year = str(2004 + i) + '_CUMULATIVE_SCORE'
+        average_score_year = str(2004 + i) + '_AVERAGE_SCORE'
+        average_academic_scores_data_set[average_score_year] = cumulative_academic_scores_data_set[cumulative_score_year].mean()
     for sports in amount_of_sport_teams:
             for i in range(11):
                 cumulative_score = cumulative_academic_scores_data_set.loc[sports][str(2004 + i) + '_CUMULATIVE_SCORE']
@@ -55,5 +59,5 @@ def create_data_set_of_cumulative_school_scores():
 
 if __name__ == '__main__':
     #create_data_set_of_cumulative_sport_scores()
-    #create_data_set_of_average_sport_scores()
-    create_data_set_of_cumulative_school_scores()
+    create_data_set_of_average_sport_scores()
+    #create_data_set_of_cumulative_school_scores()
