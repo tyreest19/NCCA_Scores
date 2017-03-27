@@ -1,4 +1,4 @@
 # NCCA_Scores_Data_Visualization
-GOALS:
+GOAL:
 - Which sport has the highest academic score
 
